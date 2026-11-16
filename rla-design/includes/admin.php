@@ -34,7 +34,7 @@ function rla_design_render_meta_box( $post ) {
 		</label>
 	</p>
 	<p class="description">
-		<?php esc_html_e( 'Applies when this page\'s Template is set to "New design". Until this box is checked, only people who can edit the page see the new design; visitors keep seeing the old one.', 'rla-design' ); ?>
+		<?php esc_html_e( 'Applies when this page\'s Template is "New design" or "New design: full width". Until this box is checked, only people who can edit the page see the new design; visitors keep seeing the old one.', 'rla-design' ); ?>
 	</p>
 	<p class="description">
 		<?php esc_html_e( 'After switching a page live, flush the cache: GoDaddy menu → Tools → Flush Cache.', 'rla-design' ); ?>
