@@ -36,6 +36,10 @@ add_action(
 				'title'       => __( 'Three cards', 'rla-design' ),
 				'description' => __( 'Three short items side by side, each with a heading and a sentence.', 'rla-design' ),
 			),
+			'map'        => array(
+				'title'       => __( 'Map and address', 'rla-design' ),
+				'description' => __( 'A Location heading, the school address and a Google map.', 'rla-design' ),
+			),
 		);
 
 		foreach ( $patterns as $slug => $meta ) {

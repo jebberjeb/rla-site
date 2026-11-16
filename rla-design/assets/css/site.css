@@ -649,6 +649,27 @@ body.rla-nav-open .rla-nav-toggle__icon::after {
 	border-radius: var(--rla-radius-sm);
 }
 
+.rla-content .rla-map iframe {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 10;
+	border: 0;
+	border-radius: var(--rla-radius);
+	background: var(--rla-green-50);
+}
+
+.rla-content .rla-map__link {
+	margin: 0.6em 0 0;
+	font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+	.rla-content .rla-map iframe {
+		aspect-ratio: 4 / 3;
+	}
+}
+
 .rla-content .wp-block-file {
 	display: flex;
 	flex-wrap: wrap;

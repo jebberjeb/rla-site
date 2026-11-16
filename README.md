@@ -44,6 +44,13 @@ The new header and footer use the same menus as the current site:
 
 To use different menus on new-design pages, assign them to **New design: main menu** and **New design: footer menu** under **Appearance → Menus → Manage Locations**.
 
+### Maps and embeds
+
+The site's firewall rejects any page save that contains an `<iframe>`, so pasted embed code won't save. Here's what to use instead:
+
+- **Map:** add the **Map and address** pattern, or a Shortcode block with `[rla_map]`. You can also set the address and height: `[rla_map address="…" height="420"]`.
+- **YouTube:** paste the video URL into an Embed or YouTube block. WordPress stores only the URL.
+
 ### Contact details and logo
 
 Address, phone, email, hours, logo and the Apply link are set in `rla-design/includes/settings.php`. Code elsewhere can change them with the `rla_design_settings` filter.
