@@ -1,0 +1,112 @@
+/*
+ * RLA New Design — editor styles.
+ * Loaded into the page editor only for pages whose Template is "New design",
+ * so staff see roughly what visitors will see while they type.
+ */
+
+.editor-styles-wrapper {
+	--rla-green-900: #0b3b22;
+	--rla-green-700: #136b3b;
+	--rla-green-600: #1a7f47;
+	--rla-green-100: #dcefe2;
+	--rla-green-50: #f1f8f3;
+	--rla-gold: #f2ce3b;
+	--rla-ink: #1b2420;
+	--rla-ink-soft: #4a5751;
+	--rla-line: #dfe6e1;
+	--rla-radius: 14px;
+	--rla-radius-sm: 8px;
+	--rla-font: "Jost", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+	color: var(--rla-ink);
+	font-family: var(--rla-font);
+	font-size: 18px;
+	line-height: 1.65;
+}
+
+.editor-styles-wrapper .wp-block {
+	max-width: 720px;
+}
+
+.editor-styles-wrapper .wp-block[data-align="wide"] {
+	max-width: 1120px;
+}
+
+.editor-styles-wrapper .wp-block[data-align="full"] {
+	max-width: none;
+}
+
+.editor-styles-wrapper .editor-post-title,
+.editor-styles-wrapper .editor-post-title__input {
+	color: var(--rla-green-900);
+	font-family: var(--rla-font);
+	font-size: 2.6rem;
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.editor-styles-wrapper :is(h2, h3, h4, h5, h6) {
+	color: var(--rla-green-900);
+	font-family: var(--rla-font);
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.editor-styles-wrapper h2 {
+	font-size: 2rem;
+}
+
+.editor-styles-wrapper h3 {
+	font-size: 1.35rem;
+}
+
+.editor-styles-wrapper a {
+	color: var(--rla-green-700);
+	text-decoration-thickness: 1.5px;
+	text-underline-offset: 3px;
+}
+
+.editor-styles-wrapper .wp-block-image img {
+	border-radius: var(--rla-radius);
+}
+
+.editor-styles-wrapper blockquote {
+	padding-left: 1.1em;
+	border-left: 4px solid var(--rla-gold);
+	color: var(--rla-green-900);
+}
+
+.editor-styles-wrapper .wp-block-button__link {
+	padding: 0.7em 1.4em;
+	border-radius: 999px;
+	background: var(--rla-gold);
+	color: #1b1b1b;
+	font-weight: 600;
+}
+
+.editor-styles-wrapper .rla-file-list {
+	display: grid;
+	gap: 10px;
+	padding: 0;
+	list-style: none;
+}
+
+.editor-styles-wrapper .rla-file-list li {
+	padding: 14px 16px;
+	border: 1px solid var(--rla-line);
+	border-radius: var(--rla-radius-sm);
+}
+
+.editor-styles-wrapper .rla-callout {
+	padding: 32px;
+	border: 1px solid var(--rla-green-100);
+	border-radius: 21px;
+	background: var(--rla-green-50);
+}
+
+.editor-styles-wrapper .rla-card {
+	padding: 24px;
+	border: 1px solid var(--rla-line);
+	border-top: 4px solid var(--rla-gold);
+	border-radius: var(--rla-radius);
+}

@@ -1,0 +1,148 @@
+<?php
+/**
+ * The opt-in "New design" page template and its preview gate.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Add "New design" to the Template dropdown for pages.
+ */
+add_filter(
+	'theme_page_templates',
+	function ( $templates ) {
+		$templates[ RLA_DESIGN_TEMPLATE ] = __( 'New design', 'rla-design' );
+		return $templates;
+	}
+);
+
+/**
+ * Pages get a Summary (excerpt) field, shown under the title in the new design.
+ */
+add_action(
+	'init',
+	function () {
+		add_post_type_support( 'page', 'excerpt' );
+	}
+);
+
+/**
+ * Whether a page uses the "New design" template.
+ *
+ * @param int|WP_Post|null $post Page.
+ * @return bool
+ */
+function rla_design_uses_template( $post = null ) {
+	$post = get_post( $post );
+	return $post && 'page' === $post->post_type && RLA_DESIGN_TEMPLATE === get_page_template_slug( $post );
+}
+
+/**
+ * Whether the new design has been switched live for visitors.
+ *
+ * @param int $post_id Page ID.
+ * @return bool
+ */
+function rla_design_is_live( $post_id ) {
+	return (bool) get_post_meta( $post_id, RLA_DESIGN_LIVE_META, true );
+}
+
+/**
+ * Whether an editor asked to see the old design for comparison (?rla-old=1).
+ *
+ * @return bool
+ */
+function rla_design_old_requested() {
+	// Read-only display toggle; no state changes, so no nonce needed.
+	return isset( $_GET['rla-old'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+}
+
+/**
+ * Whether the current request should render with the new design.
+ *
+ * @return bool
+ */
+function rla_design_is_active() {
+	static $active = null;
+
+	// The main query isn't ready yet; answer without caching.
+	if ( ! did_action( 'wp' ) ) {
+		return false;
+	}
+
+	if ( null !== $active ) {
+		return $active;
+	}
+
+	$active = false;
+
+	if ( is_admin() || ! is_singular( 'page' ) ) {
+		return $active;
+	}
+
+	$post = get_queried_object();
+	if ( ! $post instanceof WP_Post || ! rla_design_uses_template( $post ) ) {
+		return $active;
+	}
+
+	$can_edit = current_user_can( 'edit_post', $post->ID );
+
+	if ( $can_edit && rla_design_old_requested() ) {
+		return $active;
+	}
+
+	$active = rla_design_is_live( $post->ID ) || $can_edit;
+
+	return $active;
+}
+
+/**
+ * Serve the plugin's template for pages that use it. Pages still in preview
+ * fall through to the theme's normal page template for visitors.
+ */
+add_filter(
+	'template_include',
+	function ( $template ) {
+		if ( rla_design_is_active() ) {
+			return RLA_DESIGN_DIR . 'templates/new-design.php';
+		}
+		return $template;
+	},
+	1000
+);
+
+/**
+ * Keep previews out of shared caches: a preview response is personal to the
+ * editor who requested it.
+ */
+add_action(
+	'template_redirect',
+	function () {
+		if ( ! is_singular( 'page' ) ) {
+			return;
+		}
+		$post = get_queried_object();
+		if ( $post instanceof WP_Post && rla_design_uses_template( $post ) && ! rla_design_is_live( $post->ID ) && is_user_logged_in() ) {
+			nocache_headers();
+		}
+	}
+);
+
+/**
+ * Body classes for the new design.
+ */
+add_filter(
+	'body_class',
+	function ( $classes ) {
+		if ( rla_design_is_active() ) {
+			$classes[] = 'rla';
+			$post      = get_queried_object();
+			if ( $post instanceof WP_Post && ! rla_design_is_live( $post->ID ) ) {
+				$classes[] = 'rla-is-preview';
+			}
+		}
+		return $classes;
+	}
+);
