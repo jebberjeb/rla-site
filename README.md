@@ -92,6 +92,8 @@ The site's firewall rejects any page save that contains an `<iframe>`, so pasted
 - **Map:** add the **Map and address** pattern, or a Shortcode block with `[rla_map]`. You can also set the address and height: `[rla_map address="…" height="420"]`.
 - **YouTube:** paste the video URL into an Embed or YouTube block. WordPress stores only the URL.
 
+The firewall also rejects a save when an HTML attribute contains typographic punctuation: an en or em dash (– —) or a curly quote or apostrophe (‘ ’ “ ”). In practice that means image **alt text** (and link titles). Use plain `-`, `'` and `"` there. Typographic punctuation in ordinary text, headings and buttons is fine. When it happens, the block editor says "Updating failed. The response is not a valid JSON response."
+
 ### Contact details and logo
 
 Address, phone, email, hours, logo and the Apply link are set in `rla-design/includes/settings.php`. Code elsewhere can change them with the `rla_design_settings` filter.

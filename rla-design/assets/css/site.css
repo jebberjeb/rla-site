@@ -793,6 +793,11 @@ body.rla-nav-open .rla-nav-toggle__icon::after {
 	padding-block: clamp(56px, 8vw, 104px);
 }
 
+/* Two plain (white) bands in a row share one gap instead of doubling it. */
+.rla-content > .rla-band:not(.rla-band--tint, .rla-band--dark, .rla-band--gold, .rla-hero) + .rla-band:not(.rla-band--tint, .rla-band--dark, .rla-band--gold, .rla-hero) {
+	padding-block-start: 0;
+}
+
 /* Classic themes wrap a group's blocks in an inner container; keep it to
    the wide width. Without that wrapper, pad the band instead. */
 .rla-band > .wp-block-group__inner-container {
