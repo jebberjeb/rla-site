@@ -25,15 +25,25 @@ Activating the plugin changes nothing on the live site.
 
 ### Moving a page to the new design
 
-1. **Keep a copy of the old version.** For a Beaver Builder page, use Beaver Builder's **Tools → Save Template**, or copy the page to a private draft.
-2. **Pick the template.** In the page editor's sidebar, set **Template** to **New design**, then save. Only editors see it for now.
-3. **Rebuild the content with blocks.** Use **Patterns → RLA** for designed sections.
-4. **Review the real page while logged in.** Use the admin bar's **View the old design** link to compare.
-5. **Switch it live.** Tick **Show the new design to visitors** and save.
-6. **Flush the cache.** In WordPress, go to **GoDaddy → Tools → Flush Cache**.
-7. **Mark the page Done** in the page migration tracker.
+Build the new version in a private copy first. Turning Beaver Builder off on the real page would show half-finished content to visitors straight away, inside the old theme.
+
+1. **Make a private draft.** Add a new page with the same title. Set **Template** to **New design** and visibility to **Private**. Only logged-in editors can see it.
+2. **Build the content with blocks.** Use **Patterns → RLA** for designed sections.
+3. **Review the draft at its own URL** and change it until it's approved.
+4. **Swap it in, in one sitting:**
+   1. Keep a copy of the old version. For a Beaver Builder page, use Beaver Builder's **Tools → Save Template**.
+   2. Copy the draft's blocks into the real page.
+   3. Turn Beaver Builder off for that page.
+   4. Set **Template** to **New design** and tick **Show the new design to visitors**, then update.
+   5. Trash the draft.
+
+   A one-click "publish this draft over the real page" action is planned, so this step will get simpler.
+5. **Flush the cache.** In WordPress, go to **GoDaddy → Tools → Flush Cache**.
+6. **Mark the page Done** in the page migration tracker.
 
 To roll back, untick **Show the new design to visitors**, or set **Template** back to **Default template**.
+
+For a page that doesn't change content, only design (for example a page already outside Beaver Builder, like Our Staff), you can skip the draft. Set its Template to **New design**, review it while logged in, then tick **Show the new design to visitors**.
 
 ### Menus
 

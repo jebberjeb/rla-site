@@ -69,68 +69,83 @@ add_action(
 /**
  * Remove the old theme's CSS and JS on new-design pages, so the new
  * stylesheet starts from a clean slate. On pages that no longer use Beaver
- * Builder, its leftover layout CSS (from the old header and footer) goes too.
+ * Builder, its leftover CSS and JS (from the old header and footer) go too.
+ *
+ * The theme and Beaver Builder enqueue some files late, so this runs again
+ * right before styles and scripts are printed, in the head and the footer.
  */
-add_action(
-	'wp_enqueue_scripts',
-	function () {
-		if ( ! rla_design_is_active() ) {
-			return;
-		}
+function rla_design_dequeue_old_assets() {
+	if ( ! rla_design_is_active() ) {
+		return;
+	}
 
-		$theme_roots = array_unique(
-			array(
-				trailingslashit( get_template_directory_uri() ),
-				trailingslashit( get_stylesheet_directory_uri() ),
-			)
-		);
+	$theme_roots = array_unique(
+		array(
+			trailingslashit( get_template_directory_uri() ),
+			trailingslashit( get_stylesheet_directory_uri() ),
+		)
+	);
 
-		$post        = get_queried_object();
-		$keep_bb     = $post instanceof WP_Post && rla_design_page_uses_beaver_builder( $post->ID );
-		$bb_patterns = array( '/plugins/bb-plugin/', '/plugins/bb-theme-builder/', '/plugins/bbpowerpack/', '/plugins/bb-ultimate-addon/', '/uploads/bb-plugin/', '/uploads/bb-theme/' );
+	$post        = get_queried_object();
+	$keep_bb     = $post instanceof WP_Post && rla_design_page_uses_beaver_builder( $post->ID );
+	$bb_patterns = array( '/plugins/bb-plugin/', '/plugins/bb-theme-builder/', '/plugins/bbpowerpack/', '/plugins/bb-ultimate-addon/', '/uploads/bb-plugin/', '/uploads/bb-theme/' );
+	$bb_handles  = array( 'fl-builder', 'fl-theme-builder', 'fl-automator', 'pp-', 'uabb' );
 
-		$matches = function ( $src ) use ( $theme_roots, $keep_bb, $bb_patterns ) {
-			if ( ! is_string( $src ) || '' === $src ) {
-				return false;
-			}
+	$matches = function ( $handle, $src ) use ( $theme_roots, $keep_bb, $bb_patterns, $bb_handles ) {
+		if ( is_string( $src ) && '' !== $src ) {
 			foreach ( $theme_roots as $root ) {
 				if ( 0 === strpos( $src, $root ) ) {
 					return true;
 				}
 			}
-			if ( ! $keep_bb ) {
-				foreach ( $bb_patterns as $pattern ) {
-					if ( false !== strpos( $src, $pattern ) ) {
-						return true;
-					}
+		}
+		if ( $keep_bb ) {
+			return false;
+		}
+		if ( is_string( $src ) ) {
+			foreach ( $bb_patterns as $pattern ) {
+				if ( false !== strpos( $src, $pattern ) ) {
+					return true;
 				}
 			}
-			return false;
-		};
+		}
+		foreach ( $bb_handles as $prefix ) {
+			if ( 0 === strpos( $handle, $prefix ) ) {
+				return true;
+			}
+		}
+		return false;
+	};
 
-		$styles = wp_styles();
-		foreach ( (array) $styles->queue as $handle ) {
+	foreach ( array( wp_styles(), wp_scripts() ) as $deps ) {
+		foreach ( (array) $deps->queue as $handle ) {
 			if ( 0 === strpos( $handle, 'rla-design' ) ) {
 				continue;
 			}
-			$item = $styles->registered[ $handle ] ?? null;
-			if ( $item && $matches( $item->src ) ) {
-				wp_dequeue_style( $handle );
+			$item = $deps->registered[ $handle ] ?? null;
+			if ( $item && $matches( $handle, $item->src ) ) {
+				$deps->dequeue( $handle );
 			}
 		}
+	}
+}
 
-		$scripts = wp_scripts();
-		foreach ( (array) $scripts->queue as $handle ) {
-			if ( 0 === strpos( $handle, 'rla-design' ) ) {
-				continue;
-			}
-			$item = $scripts->registered[ $handle ] ?? null;
-			if ( $item && $matches( $item->src ) ) {
-				wp_dequeue_script( $handle );
-			}
+add_action( 'wp_enqueue_scripts', 'rla_design_dequeue_old_assets', 999 );
+add_action( 'wp_print_styles', 'rla_design_dequeue_old_assets', 9999 );
+add_action( 'wp_print_scripts', 'rla_design_dequeue_old_assets', 9999 );
+add_action( 'wp_print_footer_scripts', 'rla_design_dequeue_old_assets', 1 );
+
+/**
+ * The old theme's "Additional CSS" (Appearance → Customize) was written for
+ * the old design, so it isn't printed on new-design pages.
+ */
+add_action(
+	'template_redirect',
+	function () {
+		if ( rla_design_is_active() ) {
+			remove_action( 'wp_head', 'wp_custom_css_cb', 101 );
 		}
-	},
-	999
+	}
 );
 
 /**

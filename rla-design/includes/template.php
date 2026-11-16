@@ -131,6 +131,17 @@ add_action(
 );
 
 /**
+ * Drop the "Private:" prefix from titles on new-design pages, so a private
+ * draft previews the way the real page will look.
+ */
+add_filter(
+	'private_title_format',
+	function ( $format ) {
+		return rla_design_is_active() ? '%s' : $format;
+	}
+);
+
+/**
  * Body classes for the new design.
  */
 add_filter(

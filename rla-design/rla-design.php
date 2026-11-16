@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       RLA New Design
  * Description:       Opt-in "New design" page template for Rising Leaders Academy. Pages that pick it get the new header, footer, CSS and JS; every other page keeps the current theme. Preview-only until switched live per page.
- * Version:           0.1.1
+ * Version:           0.1.2
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Rising Leaders Academy
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RLA_DESIGN_VERSION', '0.1.1' );
+define( 'RLA_DESIGN_VERSION', '0.1.2' );
 define( 'RLA_DESIGN_FILE', __FILE__ );
 define( 'RLA_DESIGN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RLA_DESIGN_URL', plugin_dir_url( __FILE__ ) );

@@ -38,6 +38,18 @@ body.rla {
 	text-rendering: optimizeLegibility;
 }
 
+/* Guard against leftover global CSS: Bootstrap 3 sets html to 10px and the
+   old skin sets headings to Bebas Neue. */
+html:has(> body.rla) {
+	font-size: 100%;
+}
+
+.rla :is(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--rla-font);
+	text-transform: none;
+	letter-spacing: normal;
+}
+
 :where(.rla-header, .rla-main, .rla-footer) *,
 :where(.rla-header, .rla-main, .rla-footer) *::before,
 :where(.rla-header, .rla-main, .rla-footer) *::after {
