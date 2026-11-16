@@ -40,6 +40,36 @@ add_action(
 				'title'       => __( 'Map and address', 'rla-design' ),
 				'description' => __( 'A Location heading, the school address and a Google map.', 'rla-design' ),
 			),
+
+			// Full-width sections, for pages on the "New design: full width" template.
+			'hero'        => array(
+				'title'       => __( 'Section: hero with photo', 'rla-design' ),
+				'description' => __( 'Big headline, a sentence, two buttons and a photo. Use once, at the top of a full-width page.', 'rla-design' ),
+			),
+			'highlights'  => array(
+				'title'       => __( 'Section: highlights row', 'rla-design' ),
+				'description' => __( 'Four short facts with big values, on a tinted band.', 'rla-design' ),
+			),
+			'video-text'  => array(
+				'title'       => __( 'Section: video beside text', 'rla-design' ),
+				'description' => __( 'A YouTube video next to a heading and a paragraph.', 'rla-design' ),
+			),
+			'photo-cards' => array(
+				'title'       => __( 'Section: cards with photos', 'rla-design' ),
+				'description' => __( 'Heading, intro and a grid of photo cards that link to pages.', 'rla-design' ),
+			),
+			'awards'      => array(
+				'title'       => __( 'Section: award badges', 'rla-design' ),
+				'description' => __( 'Heading, a sentence and a gallery of award badges shown whole (not cropped).', 'rla-design' ),
+			),
+			'quick-links' => array(
+				'title'       => __( 'Section: quick links', 'rla-design' ),
+				'description' => __( 'A heading and a grid of link tiles.', 'rla-design' ),
+			),
+			'cta-band'    => array(
+				'title'       => __( 'Section: call-to-action band', 'rla-design' ),
+				'description' => __( 'A gold band with a heading, a sentence and a button.', 'rla-design' ),
+			),
 		);
 
 		foreach ( $patterns as $slug => $meta ) {

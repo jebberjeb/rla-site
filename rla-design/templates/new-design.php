@@ -28,18 +28,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 		the_post();
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'rla-page' ); ?>>
-			<header class="rla-page-header">
-				<div class="rla-wrap">
-					<h1 class="rla-page-header__title"><?php the_title(); ?></h1>
-					<?php if ( has_excerpt() ) : ?>
-						<p class="rla-page-header__lede"><?php echo esc_html( get_the_excerpt() ); ?></p>
-					<?php endif; ?>
+			<?php if ( rla_design_is_full_width() ) : ?>
+				<div class="rla-content rla-content--full">
+					<?php the_content(); ?>
 				</div>
-			</header>
+			<?php else : ?>
+				<header class="rla-page-header">
+					<div class="rla-wrap">
+						<h1 class="rla-page-header__title"><?php the_title(); ?></h1>
+						<?php if ( has_excerpt() ) : ?>
+							<p class="rla-page-header__lede"><?php echo esc_html( get_the_excerpt() ); ?></p>
+						<?php endif; ?>
+					</div>
+				</header>
 
-			<div class="rla-content">
-				<?php the_content(); ?>
-			</div>
+				<div class="rla-content">
+					<?php the_content(); ?>
+				</div>
+			<?php endif; ?>
 		</article>
 		<?php
 	endwhile;

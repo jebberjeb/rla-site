@@ -8,15 +8,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Add "New design" to the Template dropdown for pages.
+ * Add the new design's templates to the Template dropdown for pages:
+ * - "New design": green title band, then the content in a readable column.
+ * - "New design: full width": no title band; the content is built from
+ *   full-width sections (used for the home page and landing pages).
  */
 add_filter(
 	'theme_page_templates',
 	function ( $templates ) {
-		$templates[ RLA_DESIGN_TEMPLATE ] = __( 'New design', 'rla-design' );
+		$templates[ RLA_DESIGN_TEMPLATE ]      = __( 'New design', 'rla-design' );
+		$templates[ RLA_DESIGN_TEMPLATE_FULL ] = __( 'New design: full width', 'rla-design' );
 		return $templates;
 	}
 );
+
+/**
+ * Whether a page uses the full-width variant (no title band).
+ *
+ * @param int|WP_Post|null $post Page.
+ * @return bool
+ */
+function rla_design_is_full_width( $post = null ) {
+	$post = get_post( $post );
+	return $post && RLA_DESIGN_TEMPLATE_FULL === get_page_template_slug( $post );
+}
 
 /**
  * Pages get a Summary (excerpt) field, shown under the title in the new design.
@@ -29,14 +44,16 @@ add_action(
 );
 
 /**
- * Whether a page uses the "New design" template.
+ * Whether a page uses one of the new design's templates.
  *
  * @param int|WP_Post|null $post Page.
  * @return bool
  */
 function rla_design_uses_template( $post = null ) {
 	$post = get_post( $post );
-	return $post && 'page' === $post->post_type && RLA_DESIGN_TEMPLATE === get_page_template_slug( $post );
+	return $post
+		&& 'page' === $post->post_type
+		&& in_array( get_page_template_slug( $post ), array( RLA_DESIGN_TEMPLATE, RLA_DESIGN_TEMPLATE_FULL ), true );
 }
 
 /**
