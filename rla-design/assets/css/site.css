@@ -50,6 +50,11 @@ html:has(> body.rla) {
 	letter-spacing: normal;
 }
 
+/* The old theme prints a "Scroll To Top" link on every page. */
+.rla #fl-to-top {
+	display: none !important;
+}
+
 :where(.rla-header, .rla-main, .rla-footer) *,
 :where(.rla-header, .rla-main, .rla-footer) *::before,
 :where(.rla-header, .rla-main, .rla-footer) *::after {
