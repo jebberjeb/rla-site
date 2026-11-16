@@ -41,7 +41,7 @@ Build the new version in a private copy first. Turning Beaver Builder off on the
    5. Trash the draft.
 
    A one-click "publish this draft over the real page" action is planned, so this step will get simpler.
-5. **Flush the cache.** In WordPress, go to **GoDaddy → Tools → Flush Cache**.
+5. **Clear the caches.** In WordPress, go to **GoDaddy → Tools → Flush Cache**. The site's firewall keeps its own copy of each page for visitors (up to about 3 hours), and that flush doesn't clear it. To clear it, go to your GoDaddy account → **Website Security** → the firewall's settings → **Performance → Clear Cache**.
 6. **Mark the page Done** in the page migration tracker.
 
 To roll back, untick **Show the new design to visitors**, or set **Template** back to **Default template**.
