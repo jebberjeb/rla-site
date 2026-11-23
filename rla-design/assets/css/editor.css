@@ -134,7 +134,8 @@
 	line-height: 1.06;
 }
 
-.editor-styles-wrapper .rla-hero__photo img {
+.editor-styles-wrapper .rla-hero__photo img,
+.editor-styles-wrapper .rla-hero__video iframe {
 	border-radius: 24px;
 }
 

@@ -66,7 +66,7 @@ For full-width pages (each is a band that runs edge to edge):
 
 | Pattern | What it adds |
 | --- | --- |
-| Section: hero with photo | Big headline, a sentence, two buttons and a photo. Use once, at the top. |
+| Section: hero with photo | Big headline, a sentence, two buttons and a photo. Use once, at the top. To show a video instead, replace the photo with a YouTube block and give it the class `rla-hero__video`. |
 | Section: highlights row | Four short facts with big values, on a tinted band |
 | Section: video beside text | A YouTube video next to a heading and paragraph |
 | Section: cards with photos | A grid of photo cards that link to pages |
